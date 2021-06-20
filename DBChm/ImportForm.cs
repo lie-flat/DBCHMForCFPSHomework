@@ -1,5 +1,7 @@
 ﻿using ComponentFactory.Krypton.Toolkit;
 using DBCHM.Common;
+using DocTools;
+using DocTools.Dtos;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,8 +12,6 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
-using TryOpenXml.Dtos;
-using TryOpenXml.Text;
 
 namespace DBCHM
 {
@@ -168,7 +168,7 @@ namespace DBCHM
                     }
                 }
 
-                var lstDTO = XmlUtils.Deserialize(typeof(List<TableDto>), xmlContent) as List<TableDto>;
+                var lstDTO = typeof(List<TableDto>).DeserializeXml(xmlContent) as List<TableDto>;
 
                 foreach (var tabInfo in lstDTO)
                 {
