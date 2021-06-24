@@ -536,7 +536,15 @@ namespace DBCHM
             {
                 FormUtils.ShowProcessing("正在导出文档，请稍等......", this, arg =>
                 {
-                    doc.Build(saveDia.FileName);
+                    try
+                    {
+                        doc.Build(saveDia.FileName);
+                    }
+                    catch (Exception ex)
+                    {
+                        LogUtils.LogError("tsbBuild_Click", Developer.SysDefault, ex, saveDia.FileName, DBUtils.Instance.Info);
+                    }
+
                 }, null);
             }
         }
