@@ -11,12 +11,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IBM.Data.DB2;
+using System.Data.Common;
 
 namespace MJTop.Data
 {
     internal class DBFactory
     {
-        public static DB CreateInstance(DBType dbType, string connectionString, int cmdTimeOut)
+        internal static DB CreateInstance(DBType dbType, string connectionString, int cmdTimeOut)
         {
             switch (dbType)
             {
@@ -36,6 +37,48 @@ namespace MJTop.Data
                     return new DB2DDTekDB(dbType, DB2Factory.Instance, connectionString, cmdTimeOut);
                 default:
                     throw new ArgumentException("未支持的数据库类型！");
+            }
+        }
+
+        internal static void TryConnect(DBType dbType, string connectionString)
+        {
+            DbConnection conn = null;
+            switch (dbType)
+            {
+                case DBType.SqlServer:
+                    conn = SqlClientFactory.Instance.CreateConnection();
+                    break;
+                case DBType.MySql:
+                    conn = MySqlClientFactory.Instance.CreateConnection();
+                    break;
+                case DBType.Oracle:
+                    conn = OracleClientFactory.Instance.CreateConnection();
+                    break;
+                case DBType.OracleDDTek:
+                    conn = OracleFactory.Instance.CreateConnection();
+                    break;
+                case DBType.PostgreSql:
+                    conn = NpgsqlFactory.Instance.CreateConnection();
+                    break;
+                case DBType.SQLite:
+                    conn = SQLiteFactory.Instance.CreateConnection();
+                    break;
+                case DBType.DB2:
+                    conn = DB2Factory.Instance.CreateConnection();
+                    break;
+                default:
+                    throw new ArgumentException("未支持的数据库类型！");
+            }
+
+
+            try
+            {
+                conn.ConnectionString = connectionString;
+                conn.Open();
+            }
+            finally
+            {
+                conn?.Close();
             }
         }
     }

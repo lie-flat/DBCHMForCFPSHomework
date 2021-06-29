@@ -149,72 +149,120 @@ namespace DocTools
             return false;
         }
 
+
+
+
+
+
         /// <summary>
-        /// 检测是否安装某个软件，并返回软件的卸载安装路径
+        /// 搜索获取软件安装目录
         /// </summary>
-        /// <param name="softName"></param>
-        /// <param name="installPath"></param>
-        /// <returns></returns>
-        public static bool CheckInstall(string softName, string str_exe, out string installPath)
+        /// <param name="orNames">软件名称 或 软件的主程序带exe的文件名</param>
+        /// <returns>获取安装目录</returns>
+        public static string SearchInstallDir(params string[] orNames)
         {
             //即时刷新注册表
             SHChangeNotify(0x8000000, 0, IntPtr.Zero, IntPtr.Zero);
 
-            installPath = string.Empty;
+            string installDir = null;
 
-            bool isFind = false;
-            var uninstallNode = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall", false);
-            if (uninstallNode != null)
+            var or_install_addrs = new List<string>
             {
-                //LocalMachine_64
-                using (uninstallNode)
+                @"SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall",
+                @"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"
+            };
+
+            var or_get_key_names = new List<string>
+            {
+                "InstallLocation",
+                "InstallPath",
+                "Install_Dir",
+                "UninstallString"
+            };
+
+
+            Microsoft.Win32.RegistryKey regKey = null;
+            try
+            {
+                regKey = Microsoft.Win32.Registry.LocalMachine;
+
+                var arr_exe = orNames.Where(t => t.EndsWith(".exe")).ToList();
+                var arr_name = orNames.Where(t => !t.EndsWith(".exe")).ToList();
+
+                if (arr_exe.Any())
                 {
-                    foreach (var subKeyName in uninstallNode.GetSubKeyNames())
+                    foreach (var exe_name in arr_exe)
                     {
-                        var subKey = uninstallNode.OpenSubKey(subKeyName);
-                        string displayName = (subKey.GetValue("DisplayName") ?? string.Empty).ToString();
-                        string path = (subKey.GetValue("UninstallString") ?? string.Empty).ToString();
-                        Console.WriteLine(displayName);
-                        if (displayName.Contains(softName) && !string.IsNullOrWhiteSpace(path))
+                        var name_node = regKey.OpenSubKey($@"SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\{exe_name}", false);
+                        if (name_node != null)
                         {
-                            installPath = Path.Combine(Path.GetDirectoryName(path), str_exe);
-                            if (File.Exists(installPath))
+                            var keyValue = name_node.GetValue("Path");
+
+                            if (keyValue == null)
                             {
-                                isFind = true;
-                                break;
+                                //取 (默认)
+                                keyValue = name_node.GetValue("");
+                            }
+
+                            if (keyValue != null)
+                            {
+                                // 值 可能 带双引号，去除双引号
+                                installDir = keyValue.ToString().Trim('"');
+                                if (!Directory.Exists(installDir))
+                                {
+                                    // 可能是文件路径，取目录
+                                    installDir = Path.GetDirectoryName(installDir);
+                                }
+                                return installDir;
                             }
                         }
                     }
                 }
-            }
-            
-
-            if (!isFind)
-            {
-                //LocalMachine_32
-                uninstallNode = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall", false);
-                using (uninstallNode)
+                else
                 {
-                    foreach (var subKeyName in uninstallNode.GetSubKeyNames())
+                    foreach (var regAddr in or_install_addrs)
                     {
-                        var subKey = uninstallNode.OpenSubKey(subKeyName);
-                        string displayName = (subKey.GetValue("DisplayName") ?? string.Empty).ToString();
-                        string path = (subKey.GetValue("UninstallString") ?? string.Empty).ToString();
-                        Console.WriteLine(displayName);
-                        if (displayName.Contains(softName) && !string.IsNullOrWhiteSpace(path))
+                        var regSubKey = regKey.OpenSubKey(regAddr, false);
+
+                        foreach (var name in arr_name)
                         {
-                            installPath = Path.Combine(Path.GetDirectoryName(path), str_exe);
-                            if (File.Exists(installPath))
+                            var name_node = regSubKey.OpenSubKey(name);
+
+                            if (name_node != null)
                             {
-                                isFind = true;
-                                break;
+                                foreach (var keyName in or_get_key_names)
+                                {
+                                    var keyValue = name_node.GetValue(keyName);
+
+                                    if (keyValue != null)
+                                    {
+                                        // 值 可能 带双引号，去除双引号
+                                        installDir = keyValue.ToString().Trim('"');
+                                        if (!Directory.Exists(installDir))
+                                        {
+                                            // 可能是文件路径，取目录
+                                            installDir = Path.GetDirectoryName(installDir);
+                                        }
+                                        return installDir;
+                                    }
+                                }
                             }
                         }
+
                     }
                 }
             }
-            return isFind;
+            catch(Exception ex)
+            {
+                LogUtils.LogError(nameof(SearchInstallDir), Developer.SysDefault, ex);
+            }
+            finally
+            {
+                regKey?.Close();
+            }
+            return installDir;
         }
+
 
         [DllImport("shell32.dll")]
 

@@ -71,7 +71,7 @@ namespace MJTop.Data
 
         private static void CurrentDomain_AssemblyLoad(object sender, AssemblyLoadEventArgs args)
         {
-             
+
         }
 
         /// <summary>
@@ -194,6 +194,16 @@ namespace MJTop.Data
                     throw new ArgumentException("未知数据库类型！");
             }
             return connectionString;
+        }
+
+        /// <summary>
+        /// 测试连接是否成功
+        /// </summary>
+        /// <param name="dbType">数据库类型</param>
+        /// <param name="connectionString">连接字符串</param>
+        public static void TryConnect(DBType dbType, string connectionString)
+        {
+            DBFactory.TryConnect(dbType, connectionString);
         }
     }
 }

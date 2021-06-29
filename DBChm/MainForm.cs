@@ -347,6 +347,12 @@ namespace DBCHM
 
             var procNode = treeDB.Nodes["proc"];
 
+            //只要有任意一个1个勾选，勾选就起作用
+            var isHaveChecked = (tableNode != null && tableNode.Nodes.OfType<TreeNode>().Any(t => t.Checked))
+                            || (viewNode != null && viewNode.Nodes.OfType<TreeNode>().Any(t => t.Checked))
+                            || (procNode != null && procNode.Nodes.OfType<TreeNode>().Any(t => t.Checked));
+
+
             var tables = new List<TableDto>();
 
             //var viewDict = new NameValueCollection();
@@ -357,7 +363,7 @@ namespace DBCHM
 
             if (tableNode != null)
             {
-                if (tableNode.Nodes.OfType<TreeNode>().Any(t => t.Checked))
+                if (isHaveChecked || tableNode.Nodes.OfType<TreeNode>().Any(t => t.Checked))
                 {
                     var xh = 1;
                     foreach (TreeNode node in tableNode.Nodes)
@@ -378,34 +384,40 @@ namespace DBCHM
                 }
             }
 
-            if (viewNode != null && viewNode.Nodes.OfType<TreeNode>().Any(t => t.Checked))
+            if (viewNode != null)
             {
-                foreach (TreeNode node in viewNode.Nodes)
+                if (isHaveChecked || viewNode.Nodes.OfType<TreeNode>().Any(t => t.Checked))
                 {
-                    if (node.Checked)
+                    foreach (TreeNode node in viewNode.Nodes)
                     {
-                        viewDict.Add(node.Name, DBUtils.Instance.Info.Views[node.Name]);
+                        if (node.Checked)
+                        {
+                            viewDict.Add(node.Name, DBUtils.Instance.Info.Views[node.Name]);
+                        }
                     }
                 }
-            }
-            else
-            {
-                viewDict = DBUtils.Instance.Info.Views.ToDictionary();
+                else
+                {
+                    viewDict = DBUtils.Instance.Info.Views.ToDictionary();
+                }
             }
 
-            if (procNode != null && procNode.Nodes.OfType<TreeNode>().Any(t => t.Checked))
+            if (procNode != null)
             {
-                foreach (TreeNode node in procNode.Nodes)
+                if (isHaveChecked || procNode.Nodes.OfType<TreeNode>().Any(t => t.Checked))
                 {
-                    if (node.Checked)
+                    foreach (TreeNode node in procNode.Nodes)
                     {
-                        procDict.Add(node.Name, DBUtils.Instance.Info.Procs[node.Name]);
+                        if (node.Checked)
+                        {
+                            procDict.Add(node.Name, DBUtils.Instance.Info.Procs[node.Name]);
+                        }
                     }
                 }
-            }
-            else
-            {
-                procDict = DBUtils.Instance.Info.Procs.ToDictionary();
+                else
+                {
+                    procDict = DBUtils.Instance.Info.Procs.ToDictionary();
+                }
             }
 
             DbDto.Tables = tables;

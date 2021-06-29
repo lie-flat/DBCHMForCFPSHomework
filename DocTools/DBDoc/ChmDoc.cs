@@ -31,7 +31,11 @@ namespace DocTools.DBDoc
             get
             {
                 var hhcPath = string.Empty;
-                ConfigUtils.CheckInstall("HTML Help Workshop", "hhc.exe", out hhcPath);
+                var hhwDir = ConfigUtils.SearchInstallDir("HTML Help Workshop", "hhw.exe");
+                if (!string.IsNullOrWhiteSpace(hhwDir) && ZlpIOHelper.DirectoryExists(hhwDir))
+                {
+                    hhcPath = Path.Combine(hhwDir, "hhc.exe");
+                }
                 return hhcPath;
             }
         }
