@@ -30,12 +30,12 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle85 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle86 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle87 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle88 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle89 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle90 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.imgList = new System.Windows.Forms.ImageList(this.components);
             this.tlTip = new System.Windows.Forms.ToolTip(this.components);
             this.TxtSearchWords = new System.Windows.Forms.TextBox();
@@ -43,7 +43,6 @@
             this.mainPnl = new System.Windows.Forms.Panel();
             this.treePnl = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
-            this.treeDB = new DBCHM.TreeViewEnhanced();
             this.lblTongJi = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.CkAll = new System.Windows.Forms.CheckBox();
@@ -86,6 +85,7 @@
             this.ribbonPageAbout = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonAbout = new System.Windows.Forms.ToolStripButton();
             this.miniToolStrip = new System.Windows.Forms.ToolStrip();
+            this.treeDB = new DBCHM.TreeViewEnhanced();
             this.tabLayoutPnl.SuspendLayout();
             this.mainPnl.SuspendLayout();
             this.treePnl.SuspendLayout();
@@ -186,23 +186,6 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(0, 12);
             this.label2.TabIndex = 19;
-            // 
-            // treeDB
-            // 
-            this.treeDB.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.treeDB.CheckBoxes = true;
-            this.treeDB.HideSelection = false;
-            this.treeDB.ImageIndex = 0;
-            this.treeDB.ImageList = this.imgList;
-            this.treeDB.Indent = 16;
-            this.treeDB.Location = new System.Drawing.Point(0, 57);
-            this.treeDB.Name = "treeDB";
-            this.treeDB.SelectedImageIndex = 0;
-            this.treeDB.Size = new System.Drawing.Size(321, 511);
-            this.treeDB.TabIndex = 18;
-            this.treeDB.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeDB_AfterCheck);
-            this.treeDB.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeDB_AfterSelect);
             // 
             // lblTongJi
             // 
@@ -398,14 +381,14 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GV_ColComments.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
             this.GV_ColComments.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.Raised;
-            dataGridViewCellStyle85.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle85.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle85.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle85.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle85.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle85.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle85.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.GV_ColComments.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle85;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.GV_ColComments.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.GV_ColComments.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.GV_ColComments.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColXuHao,
@@ -422,11 +405,12 @@
             this.GV_ColComments.Size = new System.Drawing.Size(697, 363);
             this.GV_ColComments.TabIndex = 0;
             this.GV_ColComments.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.GV_ColComments_CellClick);
+            this.GV_ColComments.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.GV_ColComments_PreviewKeyDown);
             // 
             // ColXuHao
             // 
-            dataGridViewCellStyle86.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.ColXuHao.DefaultCellStyle = dataGridViewCellStyle86;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.ColXuHao.DefaultCellStyle = dataGridViewCellStyle2;
             this.ColXuHao.FillWeight = 10F;
             this.ColXuHao.HeaderText = "序号";
             this.ColXuHao.MinimumWidth = 30;
@@ -436,8 +420,8 @@
             // 
             // ColName
             // 
-            dataGridViewCellStyle87.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.ColName.DefaultCellStyle = dataGridViewCellStyle87;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.ColName.DefaultCellStyle = dataGridViewCellStyle3;
             this.ColName.FillWeight = 20F;
             this.ColName.HeaderText = "列名";
             this.ColName.MinimumWidth = 150;
@@ -447,8 +431,8 @@
             // 
             // ColDataType
             // 
-            dataGridViewCellStyle88.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.ColDataType.DefaultCellStyle = dataGridViewCellStyle88;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.ColDataType.DefaultCellStyle = dataGridViewCellStyle4;
             this.ColDataType.FillWeight = 23F;
             this.ColDataType.HeaderText = "数据类型";
             this.ColDataType.MinimumWidth = 110;
@@ -458,8 +442,8 @@
             // 
             // ColLength
             // 
-            dataGridViewCellStyle89.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.ColLength.DefaultCellStyle = dataGridViewCellStyle89;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.ColLength.DefaultCellStyle = dataGridViewCellStyle5;
             this.ColLength.FillWeight = 12F;
             this.ColLength.HeaderText = "长度";
             this.ColLength.MinimumWidth = 30;
@@ -470,8 +454,8 @@
             // ColComment
             // 
             this.ColComment.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            dataGridViewCellStyle90.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            this.ColComment.DefaultCellStyle = dataGridViewCellStyle90;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            this.ColComment.DefaultCellStyle = dataGridViewCellStyle6;
             this.ColComment.FillWeight = 35F;
             this.ColComment.HeaderText = "列批注";
             this.ColComment.MinimumWidth = 320;
@@ -735,6 +719,23 @@
             this.miniToolStrip.Name = "miniToolStrip";
             this.miniToolStrip.Size = new System.Drawing.Size(894, 70);
             this.miniToolStrip.TabIndex = 0;
+            // 
+            // treeDB
+            // 
+            this.treeDB.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.treeDB.CheckBoxes = true;
+            this.treeDB.HideSelection = false;
+            this.treeDB.ImageIndex = 0;
+            this.treeDB.ImageList = this.imgList;
+            this.treeDB.Indent = 16;
+            this.treeDB.Location = new System.Drawing.Point(0, 57);
+            this.treeDB.Name = "treeDB";
+            this.treeDB.SelectedImageIndex = 0;
+            this.treeDB.Size = new System.Drawing.Size(321, 511);
+            this.treeDB.TabIndex = 18;
+            this.treeDB.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeDB_AfterCheck);
+            this.treeDB.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeDB_AfterSelect);
             // 
             // MainForm
             // 

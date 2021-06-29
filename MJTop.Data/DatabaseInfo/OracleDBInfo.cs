@@ -208,14 +208,7 @@ namespace MJTop.Data.DatabaseInfo
 
                             try
                             {
-                                if (Db.DBType == DBType.OracleDDTek)
-                                {
-                                    tabInfo.Colnumns = Db.GetDataTable(strSql).ConvertToListObject<ColumnInfo>();
-                                }
-                                else
-                                {
-                                    tabInfo.Colnumns = Db.GetDataTable(strSql).ConvertToListObject<ColumnInfo>();
-                                }
+                                tabInfo.Colnumns = Db.GetDataTable(strSql).ConvertToListObject<ColumnInfo>();
 
                                 List<string> lstColName = new List<string>();
                                 NameValueCollection nvcColDeText = new NameValueCollection();
@@ -257,7 +250,7 @@ namespace MJTop.Data.DatabaseInfo
                             }
                             catch (Exception ex)
                             {
-                                LogUtils.LogError("DB", Developer.SysDefault, ex);
+                                LogUtils.LogError("DB", Developer.SysDefault, ex, strSql);
                             }
                         });
 

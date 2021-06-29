@@ -847,5 +847,26 @@ namespace DBCHM
             }
 
         }
+
+        private void GV_ColComments_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.V && GV_ColComments.SelectedCells.Count > 0)
+            {
+                var cell = GV_ColComments.SelectedCells[0];
+                var colName = GV_ColComments.Columns[cell.ColumnIndex].Name;
+                var text = Clipboard.GetText();
+                if (colName == "ColComment" && !string.IsNullOrWhiteSpace(text))
+                {
+                    var lines = text.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+                    if (lines.Length > 0)
+                    {
+                        for (int j = 0; j < lines.Length; j++)
+                        {
+                            GV_ColComments.Rows[cell.RowIndex + j].Cells[cell.ColumnIndex].Value = lines[j];
+                        }
+                    }
+                }
+            }
+        }
     }
 }
