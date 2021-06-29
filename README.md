@@ -43,7 +43,7 @@ DBHCM 是一个对数据库文档生成工具！
     - 	[x] pdm 由`powerdesigner`设计数据库时产生。
     - 	[x] xml 由`visual studio`设置 实体类库的项目属性，勾选  XML文档文件 后生成项目时产生。
     - 	[x] xml 由`dbchm`的 XML导出 而产生。
-- 编辑列注释时，可以从选定行，开始粘贴多行文本内容 对列批量注释。
+- 列批注 在编辑前的选中状态下，可以从 选定行开始 粘贴多行文本内容 对多个列注释批量赋值。
 
 ### 效果展示
 
@@ -74,9 +74,9 @@ DBHCM 是一个对数据库文档生成工具！
 - @[空无一物](https://gitee.com/dotnetchina/) 先驱者
 
 ###  下载使用
-- **[下载最新发行版本](https://gitee.com/dotnetchina/DBCHM/releases)**，下载解压后，双击运行 `DBCHM.exe`。
+- **[下载发行版本](https://gitee.com/dotnetchina/DBCHM/releases)**，下载解压后，双击运行 `DBCHM.exe`。
 
-- **[下载新功能内测版本](http://shang.qq.com/wpa/qunwpa?idkey=43619cbe3b2a10ded01b5354ac6928b30cc91bda45176f89a191796b7a7c0e26)**，Bug修复早知道，最新功能尝鲜，请在[![加入QQ群](https://img.shields.io/badge/QQ群-132941648-blue.svg)](http://shang.qq.com/wpa/qunwpa?idkey=43619cbe3b2a10ded01b5354ac6928b30cc91bda45176f89a191796b7a7c0e26)共享中获取:yum:！
+- **[下载最新功能的内测版本](http://shang.qq.com/wpa/qunwpa?idkey=43619cbe3b2a10ded01b5354ac6928b30cc91bda45176f89a191796b7a7c0e26)**，Bug修复早知道，最新功能尝鲜，请在[![加入QQ群](https://img.shields.io/badge/QQ群-132941648-blue.svg)](http://shang.qq.com/wpa/qunwpa?idkey=43619cbe3b2a10ded01b5354ac6928b30cc91bda45176f89a191796b7a7c0e26)共享中获取:yum:！
 
 ### 其他工具
 - [htmlhelp](https://gitee.com/dotnetchina/DBCHM/attach_files)，生成chm文件时，需提前安装。
