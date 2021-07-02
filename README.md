@@ -72,7 +72,10 @@ DBHCM 是一款数据库文档生成工具！
 
 查看chm效果：[某微信开发框架表结构信息(示例).chm](https://gitee.com/dotnetchina/DBCHM/attach_files)
 
+## 📘<a target='_blank' href ='./ReleaseNote.md'>更新历史</a>
+
 ## 💪贡献者
+
 - @[trycache](https://gitee.com/trycache) 主要开发者
 - @[空无一物](https://gitee.com/dotnetchina/) 先驱者
 
@@ -88,6 +91,7 @@ DBHCM 是一款数据库文档生成工具！
 ##  🌱开发计划
 
 - [x] 收集问题，修复完善基础功能
+- [x] MJTop.Data 类库完善
 - [ ]  测试数据生成器
 - [ ]  C#实体代码生成器
 - [ ]  ...

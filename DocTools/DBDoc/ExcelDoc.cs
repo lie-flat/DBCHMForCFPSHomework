@@ -179,13 +179,26 @@ namespace DocTools.DBDoc
                                                     //  循环数据库表名
             foreach (var table in tables)
             {
+                var lstName = new List<string>
+                {
+                    "序号","列名","数据类型","长度","小数位","主键","自增","允许空","默认值","列说明"
+                };
+
+                //oracle不显示 列是否自增
+                if (table.DBType.StartsWith("Oracle"))
+                {
+                    lstName.Remove("自增");
+                }
+
+                var spColCount = lstName.Count;
+
                 //  数据库名称
-                tbWorksheet.Cells[rowNum, 1, rowNum, 10].Merge = true;
+                tbWorksheet.Cells[rowNum, 1, rowNum, spColCount].Merge = true;
                 tbWorksheet.Cells[rowNum, 1].Value = table.TableName + " " + (!string.IsNullOrWhiteSpace(table.Comment) ? table.Comment : "");
-                tbWorksheet.Cells[rowNum, 1, rowNum, 10].Style.Font.Bold = true;
-                tbWorksheet.Cells[rowNum, 1, rowNum, 10].Style.Font.Size = 16;
-                tbWorksheet.Cells[rowNum, 1, rowNum, 10].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
-                tbWorksheet.Cells[rowNum, 1, rowNum, 10].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                tbWorksheet.Cells[rowNum, 1, rowNum, spColCount].Style.Font.Bold = true;
+                tbWorksheet.Cells[rowNum, 1, rowNum, spColCount].Style.Font.Size = 16;
+                tbWorksheet.Cells[rowNum, 1, rowNum, spColCount].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                tbWorksheet.Cells[rowNum, 1, rowNum, spColCount].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
 
                 //  注意：保存起始行号
                 fromRow = rowNum;
@@ -194,19 +207,15 @@ namespace DocTools.DBDoc
 
                 // tbWorksheet.Cells[int FromRow, int FromCol, int ToRow, int ToCol]
                 //  列标题字体为粗体
-                tbWorksheet.Cells[rowNum, 1, rowNum, 10].Style.Font.Bold = true;
+                tbWorksheet.Cells[rowNum, 1, rowNum, spColCount].Style.Font.Bold = true;
+
+               
 
                 //  添加列标题
-                tbWorksheet.Cells[rowNum, 1].Value = "序号";
-                tbWorksheet.Cells[rowNum, 2].Value = "列名";
-                tbWorksheet.Cells[rowNum, 3].Value = "数据类型";
-                tbWorksheet.Cells[rowNum, 4].Value = "长度";
-                tbWorksheet.Cells[rowNum, 5].Value = "小数位";
-                tbWorksheet.Cells[rowNum, 6].Value = "主键";
-                tbWorksheet.Cells[rowNum, 7].Value = "自增";
-                tbWorksheet.Cells[rowNum, 8].Value = "允许空";
-                tbWorksheet.Cells[rowNum, 9].Value = "默认值";
-                tbWorksheet.Cells[rowNum, 10].Value = "列说明";
+                for (int j = 0; j < lstName.Count; j++)
+                {
+                    tbWorksheet.Cells[rowNum, j + 1].Value = lstName[j];
+                }
 
                 rowNum++; // 行号+1
 
@@ -219,32 +228,42 @@ namespace DocTools.DBDoc
                     tbWorksheet.Cells[rowNum, 4].Value = column.Length;
                     tbWorksheet.Cells[rowNum, 5].Value = column.Scale;
                     tbWorksheet.Cells[rowNum, 6].Value = column.IsPK;
-                    tbWorksheet.Cells[rowNum, 7].Value = column.IsIdentity;
-                    tbWorksheet.Cells[rowNum, 8].Value = column.CanNull;
-                    tbWorksheet.Cells[rowNum, 9].Value = column.DefaultVal;
-                    tbWorksheet.Cells[rowNum, 10].Value = column.Comment;
 
+                    //oracle不显示 列是否自增
+                    if (table.DBType.StartsWith("Oracle"))
+                    {
+                        tbWorksheet.Cells[rowNum, 7].Value = column.CanNull;
+                        tbWorksheet.Cells[rowNum, 8].Value = column.DefaultVal;
+                        tbWorksheet.Cells[rowNum, 9].Value = column.Comment;
+                    }
+                    else
+                    {
+                        tbWorksheet.Cells[rowNum, 7].Value = column.IsIdentity;
+                        tbWorksheet.Cells[rowNum, 8].Value = column.CanNull;
+                        tbWorksheet.Cells[rowNum, 9].Value = column.DefaultVal;
+                        tbWorksheet.Cells[rowNum, 10].Value = column.Comment;
+                    }
                     rowNum++; // 行号+1
                 }
 
                 //  水平居中
-                tbWorksheet.Cells[fromRow, 1, rowNum - 1, 10].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                tbWorksheet.Cells[fromRow, 1, rowNum - 1, spColCount].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
                 //  垂直居中
-                tbWorksheet.Cells[fromRow, 1, rowNum - 1, 10].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                tbWorksheet.Cells[fromRow, 1, rowNum - 1, spColCount].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
                 //  上下左右边框线
-                tbWorksheet.Cells[fromRow, 1, rowNum - 1, 10].Style.Border.Top.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
-                tbWorksheet.Cells[fromRow, 1, rowNum - 1, 10].Style.Border.Bottom.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
-                tbWorksheet.Cells[fromRow, 1, rowNum - 1, 10].Style.Border.Left.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
-                tbWorksheet.Cells[fromRow, 1, rowNum - 1, 10].Style.Border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                tbWorksheet.Cells[fromRow, 1, rowNum - 1, spColCount].Style.Border.Top.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                tbWorksheet.Cells[fromRow, 1, rowNum - 1, spColCount].Style.Border.Bottom.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                tbWorksheet.Cells[fromRow, 1, rowNum - 1, spColCount].Style.Border.Left.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                tbWorksheet.Cells[fromRow, 1, rowNum - 1, spColCount].Style.Border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
 
                 //  处理空白行，分割用
                 if (count < tables.Count - 1)
                 {
-                    //tbWorksheet.Cells[rowNum, 1, rowNum, 10].Style.Border.Top.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
-                    //tbWorksheet.Cells[rowNum, 1, rowNum, 10].Style.Border.Bottom.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
-                    tbWorksheet.Cells[rowNum, 1, rowNum, 10].Style.Border.Left.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
-                    tbWorksheet.Cells[rowNum, 1, rowNum, 10].Style.Border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
-                    tbWorksheet.Cells[rowNum, 1, rowNum, 10].Merge = true;
+                    //tbWorksheet.Cells[rowNum, 1, rowNum, spColCount].Style.Border.Top.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                    //tbWorksheet.Cells[rowNum, 1, rowNum, spColCount].Style.Border.Bottom.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                    tbWorksheet.Cells[rowNum, 1, rowNum, spColCount].Style.Border.Left.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                    tbWorksheet.Cells[rowNum, 1, rowNum, spColCount].Style.Border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                    tbWorksheet.Cells[rowNum, 1, rowNum, spColCount].Merge = true;
                     tbWorksheet.Cells[rowNum, 1, rowNum, 1].Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid;
                     tbWorksheet.Cells[rowNum, 1, rowNum, 1].Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.DodgerBlue);
                 }

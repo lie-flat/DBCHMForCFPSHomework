@@ -431,6 +431,7 @@ namespace DBCHM
             tbDto.TableOrder = xh.ToString();
             tbDto.TableName = node.Name;
             tbDto.Comment = DBUtils.Instance.Info.TableComments[node.Name];
+            tbDto.DBType = DBUtils.Instance.DBType.ToString();
 
             var lst_col_dto = new List<ColumnDto>();
             var columns = DBUtils.Instance.Info.TableColumnInfoDict[node.Name];
@@ -475,7 +476,7 @@ namespace DBCHM
         private void TxtSearchWords_TextChanged(object sender, EventArgs e)
         {
             string searchWords = TxtSearchWords.Text.Trim();
-
+            this.SearchWords = new List<string>();
             if (!string.IsNullOrWhiteSpace(searchWords))
             {
                 var words = searchWords.Split(new string[] { ",", "，" }, StringSplitOptions.RemoveEmptyEntries);

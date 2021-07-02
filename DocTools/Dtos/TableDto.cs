@@ -28,8 +28,15 @@ namespace DocTools.Dtos
         public string Comment { get; set; }
 
         /// <summary>
+        /// 数据库类型
+        /// </summary>
+        [Display(Name = "数据库类型")]
+        public string DBType { get; set; }
+
+        /// <summary>
         /// 表格列集合
         /// </summary>
+        [Display(Name = "列数据")]
         public List<ColumnDto> Columns { get; set; }
 
     }

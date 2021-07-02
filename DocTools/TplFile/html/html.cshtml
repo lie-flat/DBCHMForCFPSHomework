@@ -652,7 +652,12 @@
                                     <td>长度</td>
                                     <td>小数位数</td>
                                     <td>主键</td>
-                                    <td>自增</td>
+
+                                    @if (!item.DBType.StartsWith("Oracle"))
+                                    {
+                                        <td>自增</td>
+                                    }
+
                                     <td>允许空</td>
                                     <td>默认值</td>
                                     <td>列说明</td>
@@ -667,7 +672,12 @@
                                         <td>@column.Length</td>
                                         <td>@column.Scale</td>
                                         <td>@column.IsPK</td>
-                                        <td>@column.IsIdentity</td>
+
+                                        @if (!item.DBType.StartsWith("Oracle"))
+                                        {
+                                            <td>@column.IsIdentity</td>
+                                        }
+
                                         <td>@column.CanNull</td>
                                         <td>@column.DefaultVal</td>
                                         <td>@column.Comment</td>

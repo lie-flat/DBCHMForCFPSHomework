@@ -92,7 +92,10 @@
                                 <td>长度</td>
                                 <td>小数位数</td>
                                 <td>主键</td>
-                                <td>自增</td>
+                                @if (!Model.DBType.StartsWith("Oracle"))
+                                {
+                                    <td>自增</td>
+                                }
                                 <td>允许空</td>
                                 <td>默认值</td>
                                 <td>列说明</td>
@@ -109,7 +112,12 @@
                                     <td>@(string.IsNullOrWhiteSpace(item.Length)? "&nbsp;":item.Length)</td>
                                     <td>@(string.IsNullOrWhiteSpace(item.Scale)? "&nbsp;":item.Scale)</td>
                                     <td>@(string.IsNullOrWhiteSpace(item.IsPK)?"&nbsp;": item.IsPK)</td>
-                                    <td>@(string.IsNullOrWhiteSpace(item.IsIdentity) ?"&nbsp;": item.IsIdentity)</td>
+
+                                    @if (!Model.DBType.StartsWith("Oracle"))
+                                    {
+                                        <td>@(string.IsNullOrWhiteSpace(item.IsIdentity) ?"&nbsp;": item.IsIdentity)</td>
+                                    }
+
                                     <td>@(string.IsNullOrWhiteSpace(item.CanNull) ?"&nbsp;": item.CanNull)</td>
                                     <td>@(string.IsNullOrWhiteSpace(item.DefaultVal) ?"&nbsp;": item.DefaultVal)</td>
                                     <td>@(string.IsNullOrWhiteSpace(item.Comment) ?"&nbsp;": item.Comment)</td>

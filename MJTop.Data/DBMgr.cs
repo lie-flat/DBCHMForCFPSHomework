@@ -196,14 +196,16 @@ namespace MJTop.Data
             return connectionString;
         }
 
+
         /// <summary>
         /// 测试连接是否成功
         /// </summary>
         /// <param name="dbType">数据库类型</param>
         /// <param name="connectionString">连接字符串</param>
-        public static void TryConnect(DBType dbType, string connectionString)
+        /// <param name="dbNames">数据库名称列表</param>
+        public static void TryConnect(DBType dbType, string connectionString, out List<string> dbNames)
         {
-            DBFactory.TryConnect(dbType, connectionString);
+            DBFactory.TryConnect(dbType, connectionString, out dbNames);
         }
     }
 }

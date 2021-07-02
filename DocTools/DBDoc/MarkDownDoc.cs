@@ -20,7 +20,7 @@ namespace DocTools.DBDoc
         {
             var sb = new StringBuilder();
             sb.AppendLine("# 数据库表目录");
-            var dirMD = this.Dto.Tables.MarkDown("Columns");
+            var dirMD = this.Dto.Tables.MarkDown("Columns", "DBType");
             dirMD = Regex.Replace(dirMD, @"(.+?\|\s+)([a-zA-Z][a-zA-Z0-9_]+)(\s+\|.+\n?)", $"$1[$2](#$2)$3", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
             sb.Append(dirMD);
@@ -33,7 +33,16 @@ namespace DocTools.DBDoc
                 {
                     sb.AppendLine();
                     sb.AppendLine($"### <a name=\"{dto.TableName}\">{dto.TableName} {dto.Comment}</a>");
-                    sb.Append(dto.Columns.MarkDown());
+
+                    if (dto.DBType.StartsWith("Oracle"))
+                    {
+                        sb.Append(dto.Columns.MarkDown("IsIdentity"));
+                    }
+                    else
+                    {
+                        sb.Append(dto.Columns.MarkDown());
+                    }
+
                     sb.AppendLine();
                 }
             }

@@ -97,7 +97,16 @@ namespace DocTools.DBDoc
 
                 //  遍历数据库表
                 //  创建表格
-                PdfPTable pdfTable = new PdfPTable(10);
+                PdfPTable pdfTable = null;
+                if (!table.DBType.StartsWith("Oracle"))
+                {
+                    pdfTable = new PdfPTable(10);
+                }
+                else
+                {
+                    pdfTable = new PdfPTable(9);
+                }
+
                 //  添加列标题
                 pdfTable.AddCell(CreatePdfPCell("序号", pdfFont));
                 pdfTable.AddCell(CreatePdfPCell("列名", pdfFont));
@@ -105,7 +114,12 @@ namespace DocTools.DBDoc
                 pdfTable.AddCell(CreatePdfPCell("长度", pdfFont));
                 pdfTable.AddCell(CreatePdfPCell("小数位", pdfFont));
                 pdfTable.AddCell(CreatePdfPCell("主键", pdfFont));
-                pdfTable.AddCell(CreatePdfPCell("自增", pdfFont));
+
+                if (!table.DBType.StartsWith("Oracle"))
+                {
+                    pdfTable.AddCell(CreatePdfPCell("自增", pdfFont));
+                }
+
                 pdfTable.AddCell(CreatePdfPCell("允许空", pdfFont));
                 pdfTable.AddCell(CreatePdfPCell("默认值", pdfFont));
                 pdfTable.AddCell(CreatePdfPCell("列说明", pdfFont));
@@ -118,7 +132,12 @@ namespace DocTools.DBDoc
                     pdfTable.AddCell(CreatePdfPCell(column.Length, pdfFont));
                     pdfTable.AddCell(CreatePdfPCell(column.Scale, pdfFont));
                     pdfTable.AddCell(CreatePdfPCell(column.IsPK, pdfFont));
-                    pdfTable.AddCell(CreatePdfPCell(column.IsIdentity, pdfFont));
+
+                    if (!table.DBType.StartsWith("Oracle"))
+                    {
+                        pdfTable.AddCell(CreatePdfPCell(column.IsIdentity, pdfFont));
+                    }
+
                     pdfTable.AddCell(CreatePdfPCell(column.CanNull, pdfFont));
                     pdfTable.AddCell(CreatePdfPCell(column.DefaultVal, pdfFont));
                     pdfTable.AddCell(CreatePdfPCell(column.Comment, pdfFont));
@@ -128,7 +147,16 @@ namespace DocTools.DBDoc
                 pdfTable.HorizontalAlignment = Element.ALIGN_CENTER;
                 pdfTable.TotalWidth = 520F;
                 pdfTable.LockedWidth = true;
-                pdfTable.SetWidths(new float[] { 50F, 60F, 60F, 50F, 50F, 50F, 50F, 50F, 50F, 50F });
+
+                if (!table.DBType.StartsWith("Oracle"))
+                {
+                    pdfTable.SetWidths(new float[] { 50F, 60F, 60F, 50F, 50F, 50F, 50F, 50F, 50F, 50F });
+                }
+                else
+                {
+                    pdfTable.SetWidths(new float[] { 50F, 80F, 70F, 50F, 50F, 50F, 50F, 50F, 70F });
+                }
+                    
 
                 //  添加表格
                 pdfDocument.Add(pdfTable);

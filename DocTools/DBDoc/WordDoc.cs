@@ -143,9 +143,12 @@ namespace DocTools.DBDoc
                 builder.CellFormat.PreferredWidth = PreferredWidth.FromPercent(8);
                 builder.Write("主键");
 
-                builder.InsertCell();
-                builder.CellFormat.PreferredWidth = PreferredWidth.FromPercent(8);
-                builder.Write("自增");
+                if (!table.DBType.StartsWith("Oracle"))
+                {
+                    builder.InsertCell();
+                    builder.CellFormat.PreferredWidth = PreferredWidth.FromPercent(8);
+                    builder.Write("自增");
+                }
 
                 builder.InsertCell();
                 builder.CellFormat.PreferredWidth = PreferredWidth.FromPercent(8);
@@ -193,8 +196,11 @@ namespace DocTools.DBDoc
                     builder.InsertCell();
                     builder.Write(column.IsPK); // 主键
 
-                    builder.InsertCell();
-                    builder.Write(column.IsIdentity); // 自增
+                    if (!table.DBType.StartsWith("Oracle"))
+                    {
+                        builder.InsertCell();
+                        builder.Write(column.IsIdentity); // 自增
+                    }
 
                     builder.InsertCell();
                     builder.Write(column.CanNull); // 是否为空

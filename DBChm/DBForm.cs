@@ -1,6 +1,7 @@
 ﻿using ComponentFactory.Krypton.Toolkit;
 using MJTop.Data;
 using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Windows.Forms;
 
@@ -145,20 +146,18 @@ namespace DBCHM
 
                 var connString = InitConnectionStr(type);
 
-                DBMgr.TryConnect(type, connString);
+                List<string> dbNames = null;
 
-                //string strDBName = cboDBName.Text;
+                DBMgr.TryConnect(type, connString, out dbNames);
 
-                //this.InitDb(type, strDBName);
-
-                //var info = DBUtils.Instance.Info;
-
-                //cboDBName.Items.Clear();
-                //foreach (var dbName in info.DBNames)
-                //{
-                //    cboDBName.Items.Add(dbName);
-                //}
-                //cboDBName.SelectedItem = strDBName;
+                if (dbNames != null && dbNames.Count > 0)
+                {
+                    cboDBName.Items.Clear();
+                    foreach (var dbName in dbNames)
+                    {
+                        cboDBName.Items.Add(dbName);
+                    }
+                }
 
                 this.Text = "连接服务器成功！";
             }
