@@ -72,7 +72,9 @@ DBHCM 是一款数据库文档生成工具！
 
 查看chm效果：[某微信开发框架表结构信息(示例).chm](https://gitee.com/dotnetchina/DBCHM/attach_files)
 
-## 📘<a target='_blank' href ='./ReleaseNote.md'>更新历史</a>
+## 📘发行历史
+
+​	<a target='_blank' href ='./ReleaseNote.md'>ReleaseNote</a>
 
 ## 💪贡献者
 
