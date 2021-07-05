@@ -138,9 +138,10 @@ DBHCM 是一款数据库文档生成工具！
 	
 	因为Oracle的 `列是否自增` 的sql语句，查询效率比较低，查的比较慢，没有卡死！！请耐心等待！！
 	
+
 🔹**注：因Oracle查询自增相当耗时，Oracle在v1.8.0.3-beta版本及以后暂不会查询自增数据。**
 	
-	PS：如果你有更好方法，欢迎提供改善建议，助力✊该工具越来越好使！
+PS：如果你有更好方法，欢迎提供改善建议，助力✊该工具越来越好使！
 	
 - **Oracle 11g、Oracle 12c测试连接显示“[28040]ORA-28040:没有匹配的验证协议”？**
 
@@ -150,18 +151,20 @@ DBHCM 是一款数据库文档生成工具！
 
 	目前想到的解决问题办法是，需在sqlnet.ora添加设置
 
-		SQLNET.ALLOWED_LOGON_VERSION=8
-		SQLNET.ALLOWED_LOGON_VERSION_SERVER=8
-		SQLNET.ALLOWED_LOGON_VERSION_CLIENT=8
-
+	```shell
+	SQLNET.ALLOWED_LOGON_VERSION=8
+	SQLNET.ALLOWED_LOGON_VERSION_SERVER=8
+  SQLNET.ALLOWED_LOGON_VERSION_CLIENT=8
+	```
+	
 	参数值可设置8、10等，使用者可根据需要自行设置。
 	
 	![ORA-28040修改兼容](https://gitee.com/dotnetchina/DBCHM/raw/master/DBChm/Images/ORA-28040.png)
-	
+
 	注意：改完后其他相关用户的密码必须重置,或直接更新为原来的密码也是可以的（修改密码sql示例：alter user System identified by oldpassword;），此项操作慎重。
 
 	要么在建库的初期添加此参数，然后重置相关密码；要么新建测试环境，进行此项操作。
-
+	
 	- **其他问题**
 	
 	如遇其他问题，可以通过Issues或群里反馈，记录问题，请写清楚遇到问题的原因、软件版本、系统环境、数据库版本、甚至数据库结构、复显步骤以及期望达到的效果；建议配上多张全屏大图，请勿使用局部截屏小图！方便我们这边可以迅速定位，就事论事，解决问题。
