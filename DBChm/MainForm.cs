@@ -529,6 +529,8 @@ namespace DBCHM
                 return;
             }
 
+            CFPS.ProcessDto(this.DbDto);
+
             var docType = btn.Tag.ToString().GetEnum<DocType>();
             var doc = DocFactory.CreateInstance(docType, this.DbDto);
 
